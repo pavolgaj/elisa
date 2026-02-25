@@ -762,7 +762,7 @@ class BinarySystem(System):
         """
         def _potential(radius):
             theta, d = const.HALF_PI, periastron_distance
-            if isinstance(radius, (float, int, FLOAT, INT)):
+            if isinstance(radius, (float, int)):
                 radius = [radius]
             elif not isinstance(radius, tuple([list, np.array])):
                 raise ValueError("Incorrect value of variable `radius`.")
@@ -940,7 +940,7 @@ class BinarySystem(System):
         input_argument = np.array([input_argument]) if np.isscalar(input_argument) else input_argument
         orbital_motion = self.orbit.orbital_motion(phase=input_argument) if calculate_from == 'phase' \
             else self.orbit.orbital_motion_from_azimuths(azimuth=input_argument)
-        idx = up.arange(np.shape(input_argument)[0], dtype=INT)
+        idx = up.arange(np.shape(input_argument)[0], dtype=int)
         positions = np.hstack((idx[:, np.newaxis], orbital_motion))
         # return retval, positions if return_nparray else retval
         return positions if return_nparray else [const.Position(*p) for p in positions]

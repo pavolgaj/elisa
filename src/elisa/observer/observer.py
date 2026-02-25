@@ -4,7 +4,6 @@ import numpy as np
 from . import utils as outils
 from . plot import Plot
 from . passband import PassbandContainer, init_bolometric_passband
-from .. base.types import INT
 from .. binary_system.curves.community import RadialVelocitySystem
 from .. import settings
 from .. utils import is_empty, jd_to_phase
@@ -306,10 +305,10 @@ class Observer(object):
                 return np.unique(base_interval, return_inverse=True)
             # in case of clear surface no pulsations and spots, only single observation is needed
             else:
-                return np.zeros(1), np.zeros(phases.shape[0], dtype=INT)
+                return np.zeros(1), np.zeros(phases.shape[0], dtype=int)
 
         elif self._system_cls == RadialVelocitySystem or str(self._system_cls) == str(RadialVelocitySystem):
-            return phases, up.arange(phases.shape[0], dtype=INT)
+            return phases, up.arange(phases.shape[0], dtype=int)
 
         else:
             raise NotImplemented("Not implemented.")

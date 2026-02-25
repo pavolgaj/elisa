@@ -3,7 +3,6 @@ from scipy.spatial.qhull import Delaunay
 
 from ... base import spot
 from ... base.surface import faces as bfaces
-from ... base.types import INT
 from ... logger import getLogger
 from ... base.surface.faces import set_all_surface_centres, mirror_triangulation
 
@@ -43,7 +42,7 @@ def build_surface_with_no_spots(system_container):
     triangles = triangles[~(triangles >= points_length).any(1)]
     triangles = triangles[~((points_to_triangulate[triangles] == 0.).all(1)).any(1)]
     # setting number of base symmetry faces
-    star_container.base_symmetry_faces_number = INT(np.shape(triangles)[0])
+    star_container.base_symmetry_faces_number = int(np.shape(triangles)[0])
     # let's exploit axial symmetry and fill the rest with the surface of the star
     star_container.faces = mirror_triangulation(triangles, star_container.inverse_point_symmetry_matrix)
 

@@ -121,7 +121,7 @@ def apply_reflection_effect(system, components_distance, iterations):
     }
 
     # setting reflection factor R = 1 + F_irradiated / F_original, initially equal to one everywhere - vector
-    reflection_factor = {cmp: np.ones(np.sum(vis_test[cmp]), dtype=FLOAT) for cmp in components}
+    reflection_factor = {cmp: np.ones(np.sum(vis_test[cmp]), dtype=float) for cmp in components}
     counterpart = settings.BINARY_COUNTERPARTS
 
     # for faster convergence, reflection effect is calculated first on cooler component
@@ -391,8 +391,8 @@ def get_symmetrical_gammma(shape, shape_reduced, normals, join_vector, vis_test,
     :param vis_test_symmetry: Dict[str, numpy.array];
     :return: gamma: Dict[str, numpy.array]; cos(angle(normal, join_vector))
     """
-    gamma = {'primary': np.empty(shape=shape, dtype=FLOAT),
-             'secondary': np.empty(shape=shape, dtype=FLOAT)}
+    gamma = {'primary': np.empty(shape=shape, dtype=float),
+             'secondary': np.empty(shape=shape, dtype=float)}
 
     gamma['primary'][:, :shape_reduced[1]] = \
         re_numba.gamma_primary(normals['primary'][vis_test['primary']],
@@ -438,8 +438,8 @@ def get_symmetrical_d_gamma(shape, shape_reduced, ldc, gamma):
     :param gamma: Dict; cosines of angles between join vector and surface element normal vector for both components
     :return: Dict; limb darkening coefficient matrix
     """
-    d_gamma = {'primary': np.empty(shape=shape, dtype=FLOAT),
-               'secondary': np.empty(shape=shape, dtype=FLOAT)}
+    d_gamma = {'primary': np.empty(shape=shape, dtype=float),
+               'secondary': np.empty(shape=shape, dtype=float)}
 
     cos_theta = gamma['primary'][:, :shape_reduced[1]]
     d_gamma['primary'][:, :shape_reduced[1]] = ld.limb_darkening_factor(
@@ -483,7 +483,7 @@ def get_symmetrical_q_ab(shape, shape_reduced, gamma, distance):
     :param distance: numpy.array;
     :return: numpy.array;
     """
-    q_ab = np.empty(shape=shape, dtype=FLOAT)
+    q_ab = np.empty(shape=shape, dtype=float)
     q_ab[:, :shape_reduced[1]] = \
         up.divide(up.multiply(gamma['primary'][:, :shape_reduced[1]],
                               gamma['secondary'][:, :shape_reduced[1]]),

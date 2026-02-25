@@ -28,11 +28,11 @@ ELISa
 Latest version
 ~~~~~~~~~~~~~~
 
-ELISa has been updated to work with the latest Python versions up to v3.12. However, the latest package
+ELISa has been updated to work with the latest Python versions up to v3.13 and the latest versions of numpy (2.2.4) and astropy (7.0.1). However, the latest package
 released on PyPI is only compatible with Python versions up to v3.8. If you want to install ELISa with a
 newer Python version, please install it from GitHub:
 
-    pip install git+https://github.com/mikecokina/elisa.git@release/0.6.1
+    pip install git+https://github.com/pavolgaj/elisa.git
 
 In case of any installation issues, please do not hesitate to create an issue on GitHub.
 
@@ -65,17 +65,17 @@ Requirements
 
 **ELISa** is a python package which requires ``python v3.6+`` and has following dependencies::
 
-    astropy>=4.0.1,<=5.3.4
+    astropy>=4.0.1
     corner>=2.2.1
-    emcee>=3.0.1,<=3.1.6
+    emcee>=3.0.1
     jsonschema>=3.2.0
-    matplotlib>=3.3.2,<=3.7.5
-    numpy>=1.16.2,<=1.26.4
-    pandas>=0.24.0,<=1.5.3
-    packaging<=24.2
-    pytest>=3.2.3,<=8.3.4
-    python-dateutil>=2.6.1,<=2.8.1
-    scipy>=1.0.0,<=1.10.1
+    matplotlib>=3.3.2
+    numpy>=1.16.2
+    pandas>=0.24.0
+    packaging
+    pytest>=3.2.3
+    python-dateutil>=2.6.1
+    scipy>=1.0.0
     tqdm>4.43.0
     parameterized>=0.7.4
     numba>=0.51.2

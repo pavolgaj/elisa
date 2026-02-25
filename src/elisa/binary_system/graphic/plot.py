@@ -231,7 +231,7 @@ class Plot(object):
                 face_mask_primary=None, face_mask_secondary=None, elevation=None, azimuth=None, colorbar_unit='default',
                 axis_unit=u.dimensionless_unscaled, colorbar_orientation='vertical', colorbar=True, scale='linear',
                 surface_colors=('g', 'r'), separate_colormaps=None, colorbar_separation=0.0, colorbar_size=0.7,
-                return_figure_instance: bool=False, subtract_equilibrium: bool=False):
+                return_figure_instance: bool=False, subtract_equilibrium: bool=False, size=(7,7)):
         """
         Function creates plot of binary system components
 
@@ -380,7 +380,8 @@ class Plot(object):
             "separate_colormaps": separate_colormaps,
             'colorbar_separation': colorbar_separation,
             'colorbar_size': colorbar_size,
-            'return_figure_instance': return_figure_instance
+            'return_figure_instance': return_figure_instance,
+            'size': size
         })
 
         return graphics.binary_surface(**surface_kwargs)

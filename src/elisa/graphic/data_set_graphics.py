@@ -17,6 +17,7 @@ def display_observations(**kwargs):
                               (matplotlib.pyplot.errorbar or matplotlib.pyplot.scatter).
 
     """
+    figure = plt.figure()
     if kwargs['y_err'] is not None:
         plt.errorbar(x=kwargs['x_data'], y=kwargs['y_data'], yerr=kwargs['y_err'], linestyle='none',
                      **kwargs['plot_kwargs'])
@@ -29,4 +30,5 @@ def display_observations(**kwargs):
     plt.ylabel(y_lbl)
     plt.subplots_adjust(top=0.98, right=0.98)
 
-    plt.show()
+    #plt.show()
+    return figure

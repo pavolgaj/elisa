@@ -320,7 +320,8 @@ def binary_surface(**kwargs):
         * **colorbar_size** * -- float; relative size of the colorbar, default 0.7
     """
 
-    fig = plt.figure(figsize=(7, 7))
+    fig = plt.figure(figsize=kwargs['size'])
+    #fig.tight_layout()
     ax = fig.add_subplot(111, projection='3d')
     ax.set_box_aspect([1, 1, 1])
     ax.elev = kwargs['elevation']
@@ -915,10 +916,10 @@ def binary_lc_fit_plot(**kwargs):
             ax2.scatter(kwargs['x_data'][fltr], kwargs['residuals'][fltr], s=3, label=fltr + ' residual',
                         color=dt_clr)
         else:
-            ax1.errorbar(kwargs['x_data'][fltr], kwargs['y_data'][fltr], yerr=kwargs['y_err'][fltr],
+            ax1.errorbar(kwargs['x_data'][fltr], kwargs['y_data'][fltr], yerr=kwargs['y_err'][fltr], fmt='o',
                          linestyle='none', markersize=3, label=fltr + ' observed', color=dt_clr, rasterized=rasterize)
 
-            ax2.errorbar(kwargs['x_data'][fltr], kwargs['residuals'][fltr], yerr=kwargs['y_err'][fltr],
+            ax2.errorbar(kwargs['x_data'][fltr], kwargs['residuals'][fltr], yerr=kwargs['y_err'][fltr], fmt='o',
                          linestyle='none', markersize=3, label=fltr + ' residual', color=dt_clr, rasterized=rasterize)
 
         ax1.plot(kwargs['synth_phases'], curve, label=fltr + ' synthetic', color=clr, linewidth=2)

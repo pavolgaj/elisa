@@ -114,6 +114,8 @@ setup(
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
+		'Programming Language :: Python :: 3.13',
+		'Programming Language :: Python :: 3.14',
     ],
 
     # What does your project relate to?
@@ -133,22 +135,20 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
-        'astropy>=4.0.1,<=5.3.4',
+        'astropy>=4.0.1',
         'corner>=2.2.1',
-        'emcee>=3.0.1,<=3.1.6',
+        'emcee>=3.0.1',
         'jsonschema>=3.2.0',
-        'matplotlib>=3.3.2,<=3.7.5',
-        'numpy>=1.16.2,<=1.26.4',
-        'packaging<=24.2',
-        'pandas>=0.24.0,<=1.5.3',
-        'python-dateutil>=2.6.1,<=2.8.1',
-        'scipy>=1.0.0,<=1.11.4',
+        'matplotlib>=3.3.2',
+        'numpy>=1.16.2',
+        'packaging',
+        'pandas>=0.24.0',
+        'python-dateutil>=2.6.1',
+        'scipy>=1.0.0',
         'tqdm>=4.43.0',
         'parameterized>=0.7.4',
         'numba>=0.51.2',
         'requests>=2.26.0',
-        'setuptools<=75.8.0',
-        'wheel<=0.45.1',
     ],
 
     # List additional groups of dependencies here (e.g. development
@@ -157,7 +157,7 @@ setup(
     # $ pip install -e .[dev,test]
     extras_require={
         'dev': [],
-        'test': ['coverage', 'parameterized>=0.7.4', 'pytest>=3.2.3,<=8.3.4'],
+        'test': ['coverage', 'parameterized>=0.7.4', 'pytest>=3.2.3'],
     },
 
     # If there are data files included in your packages that need to be

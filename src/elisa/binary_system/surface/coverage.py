@@ -6,7 +6,6 @@ from copy import copy
 
 from .. import utils as bsutils
 from ... import settings
-from ... base.types import FLOAT, INT
 from ... logger import getLogger
 from ... import (
     umpy as up,
@@ -36,7 +35,7 @@ def partial_visible_faces_surface_coverage(points, faces, normals, hull):
     pypex_intersection = bsutils.pypex_poly_hull_intersection(pypex_faces, pypex_hull)
 
     # think about surface normalisation like and avoid surface areas like 1e-6 which lead to loss in precission
-    pypex_polys_surface_area = np.array(bsutils.pypex_poly_surface_area(pypex_intersection), dtype=FLOAT)
+    pypex_polys_surface_area = np.array(bsutils.pypex_poly_surface_area(pypex_intersection), dtype=float)
 
     inplane_points_3d = np.column_stack((points, np.zeros(points.shape[0])))
     inplane_surface_area = utils.triangle_areas(triangles=faces, points=inplane_points_3d)
@@ -129,7 +128,7 @@ def visibility_similar_objects(undercover_visible_projection, undercover_object,
     out_of_bound = up.invert(cover_outline.contains_points(undercover_visible_projection))
 
     undercover_visible_point_indices = undercover_visible_point_indices[out_of_bound]
-    undercover_faces = np.full(undercover_object.normals.shape, -1, dtype=INT)
+    undercover_faces = np.full(undercover_object.normals.shape, -1, dtype=int)
     undercover_faces[undercover_object.indices] = undercover_object.faces[undercover_object.indices]
 
     eclipse_faces_visibility = np.isin(undercover_faces, undercover_visible_point_indices)
@@ -166,7 +165,7 @@ def visibility_disimilar_objects(undercover_visible_projection, undercover_objec
     out_of_bound = ~np.logical_and(max_condition, min_condition)
 
     undercover_visible_point_indices = undercover_visible_point_indices[out_of_bound]
-    undercover_faces = np.full(undercover_object.normals.shape, -1, dtype=INT)
+    undercover_faces = np.full(undercover_object.normals.shape, -1, dtype=int)
     undercover_faces[undercover_object.indices] = undercover_object.faces[undercover_object.indices]
 
     eclipse_faces_visibility = np.isin(undercover_faces, undercover_visible_point_indices)

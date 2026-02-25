@@ -91,7 +91,7 @@ def read_data_file(filename, data_columns, delimiter=settings.DELIM_WHITESPACE):
         engine='python', **reader_kwargs
     )[list(data_columns)]
     data = data.apply(lambda s: pd.to_numeric(s, errors='coerce')).dropna()
-    return data.to_numpy(dtype=FLOAT)
+    return data.to_numpy(dtype=float)
 
 
 def central_moving_average(dt_set, n_bins=100, radius=2, cyclic_boundaries=True):
@@ -110,13 +110,13 @@ def central_moving_average(dt_set, n_bins=100, radius=2, cyclic_boundaries=True)
     bin_idxs = np.digitize(dt_set.x_data, bin_boundaries[1:], right=True)
 
     if cyclic_boundaries:
-        bins = [(np.arange(start=ii-radius, stop=ii+radius+1, step=1.0, dtype=INT) % n_bins)
+        bins = [(np.arange(start=ii-radius, stop=ii+radius+1, step=1.0, dtype=int) % n_bins)
                 for ii in range(n_bins)]
     else:
-        bins = [np.arange(start=0, stop=ii+radius+1, step=1.0, dtype=INT) for ii in range(radius)]
-        bins += [np.arange(start=ii-radius, stop=ii+radius+1, step=1.0, dtype=INT)
+        bins = [np.arange(start=0, stop=ii+radius+1, step=1.0, dtype=int) for ii in range(radius)]
+        bins += [np.arange(start=ii-radius, stop=ii+radius+1, step=1.0, dtype=int)
                  for ii in range(radius, n_bins-radius)]
-        bins += [np.arange(start=ii-radius, stop=n_bins, step=1.0, dtype=INT)
+        bins += [np.arange(start=ii-radius, stop=n_bins, step=1.0, dtype=int)
                  for ii in range(n_bins-radius, n_bins)]
 
     bin_masks = [np.isin(bin_idxs, bins[ii]) for ii in range(n_bins)]

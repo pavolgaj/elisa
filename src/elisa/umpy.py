@@ -22,7 +22,7 @@ log = np.log
 exp = np.exp
 
 isnan = np.isnan
-NaN = np.NaN
+NaN = np.nan
 power = np.power
 matmul = np.matmul
 multiply = np.multiply
@@ -47,6 +47,9 @@ ones = np.ones
 round = np.round
 
 # scipy
-sph_harm = special.sph_harm
+try:
+    sph_harm = special.sph_harm_y
+except AttributeError:
+    sph_harm = special.sph_harm
 lpmv = special.lpmv
 optimize = optimize

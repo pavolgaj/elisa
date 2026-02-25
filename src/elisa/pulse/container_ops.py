@@ -43,14 +43,14 @@ def generate_harmonics(star_container, com_x, phase, time):
         exponential[mode_index] = putils.generate_time_exponential(mode, time)
 
         # generating harmonics Y_m^l and Y_m+1^l for star and spot points
-        harmonics = np.zeros((2, tilted_points.shape[0]), dtype=COMPLEX)
+        harmonics = np.zeros((2, tilted_points.shape[0]), dtype=complex)
         harmonics[0] = pulsations.spherical_harmonics(mode, tilted_points, exponential[mode_index])
         if mode.m != mode.l:
             _args, _kwargs = (mode, tilted_points, exponential[mode_index]), dict(order=mode.m + 1, degree=mode.l)
             harmonics[1] = pulsations.spherical_harmonics(*_args, **_kwargs)
 
         # generating derivatives of spherical harmonics by phi an theta
-        derivatives = np.empty((2, tilted_points.shape[0]), dtype=COMPLEX)
+        derivatives = np.empty((2, tilted_points.shape[0]), dtype=complex)
         derivatives[0] = pulsations.diff_spherical_harmonics_by_phi(mode, harmonics)
         _args = (mode, harmonics, tilted_points[:, 1], tilted_points[:, 2])
         derivatives[1] = pulsations.diff_spherical_harmonics_by_theta(*_args)

@@ -19,7 +19,7 @@ def array_transform(value, when_array):
     :return: numpy.array;
     """
     if isinstance(value, when_array):
-        return np.array(value, dtype=FLOAT)
+        return np.array(value, dtype=float)
     elif not is_empty(value):
         raise TypeError('Input of variable is not array-like.')
 

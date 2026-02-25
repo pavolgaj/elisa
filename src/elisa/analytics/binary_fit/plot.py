@@ -205,7 +205,7 @@ class LCPlot(object):
 
     def model(self, start_phase=-0.6, stop_phase=0.6, number_of_points=300, discretization=5,
               separation=0.1, data_frac_to_normalize=0.1, normalization_kind='maximum', plot_legend=True, loc=1,
-              return_figure_instance=False, rasterize=None, **kwargs):
+              return_figure_instance=False, rasterize=None, output=False, **kwargs):
         """
         Prepares data for plotting the model described by fit params or calculated by last run of fitting procedure.
 
@@ -320,6 +320,20 @@ class LCPlot(object):
         })
 
         logger.debug('Sending data to matplotlib interface.')
+
+        if output:
+            output_results={
+                'synth_phases': synth_phases,
+                'lcs': lc_fit,
+                'residuals': residuals,
+                'x_data': x_data,
+	            'y_data': y_data,
+	            'y_err': y_err,
+	            }
+
+            return graphics.binary_lc_fit_plot(**plot_result_kwargs), output_results
+
+
         return graphics.binary_lc_fit_plot(**plot_result_kwargs)
 
 
@@ -468,7 +482,7 @@ def autocorrelation(mcmc_fit_instance, correlations_to_plot=None, flat_chain=Non
 
     for i, lbl in enumerate(variable_labels):
         autocorr_fns[:, i] = function_1d(flat_chain[:, i])
-        autocorr_time[i] = integrated_time(flat_chain[:, i], quiet=True)
+        autocorr_time[i] = integrated_time(flat_chain[:, i], quiet=True).item()
 
     autocorr_plot_kwargs.update({
         'correlations_to_plot': correlations_to_plot,

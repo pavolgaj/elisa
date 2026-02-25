@@ -1,7 +1,6 @@
 import numpy as np
 from packaging import version
 
-from . types import INT, FLOAT
 from .. import (
     units as u,
     const,
@@ -97,7 +96,7 @@ class SystemProperties(TransformProperties):
         if isinstance(value, (u.Quantity, str)):
             value = u.Quantity(value) if isinstance(value, str) else value
             value = np.float64(value.to(u.DefaultSystemUnits.inclination))
-        elif isinstance(value, (int, INT, float, FLOAT)):
+        elif isinstance(value, (int, float)):
             value = np.float64((value * DefaultSystemInputUnits.inclination).to(DefaultSystemUnits.inclination))
         else:
             raise TypeError('Input of variable `inclination` is not (numpy.)int or (numpy.)float '
@@ -400,7 +399,7 @@ class SpotProperties(BodyProperties):
         :param value: flaot
         :return: float
         """
-        if not isinstance(value, (int, INT, float, FLOAT)):
+        if not isinstance(value, (int, float)):
             raise TypeError('Input of variable `temperature_factor` is not (numpy.)int or (numpy.)float.')
         return np.float64(value)
 

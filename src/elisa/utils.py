@@ -231,7 +231,7 @@ def arbitrary_rotation(theta, omega, vector, degrees=False, omega_normalized=Fal
 
     theta = theta if not degrees else up.radians(theta)
 
-    matrix = up.arange(9, dtype=FLOAT).reshape((3, 3))
+    matrix = up.arange(9, dtype=float).reshape((3, 3))
 
     matrix[0, 0] = (up.cos(theta)) + (omega[0] ** 2 * (1. - up.cos(theta)))
     matrix[1, 0] = (omega[0] * omega[1] * (1. - up.cos(theta))) - (omega[2] * up.sin(theta))
@@ -259,7 +259,7 @@ def around_axis_rotation(theta, vector, axis, inverse=False, degrees=False):
     :param degrees: bool; if True value theta is assumed to be in degrees
     :return: numpy.array; rotated vector(s)
     """
-    matrix = up.arange(9, dtype=FLOAT).reshape((3, 3))
+    matrix = up.arange(9, dtype=float).reshape((3, 3))
     theta = theta if not degrees else up.radians(theta)
     vector = np.array(vector)
 
@@ -567,7 +567,7 @@ def find_surrounded_as_matrix(look_in, look_for):
     positive_mask[all_positive_inline, -1] = False
     # find signs switching columns
     sign_swith_mask = up.logical_xor(positive_mask[:, :-1], positive_mask[:, 1:])
-    idx_array = np.ones(np.shape(dif), dtype=INT) * up.arange(np.shape(look_in)[0])
+    idx_array = np.ones(np.shape(dif), dtype=int) * up.arange(np.shape(look_in)[0])
     idx_array = idx_array[:, :-1][sign_swith_mask]
     ret_matrix = np.column_stack((look_in[idx_array], look_in[idx_array + 1]))
     # consider on place value as not surounded (surounded by itself)
@@ -658,7 +658,7 @@ def get_line_of_sight_single_system(phase, inclination):
     :param inclination: float;
     :return: numpy.array;
     """
-    line_of_sight_spherical = np.empty((len(phase), 3), dtype=FLOAT)
+    line_of_sight_spherical = np.empty((len(phase), 3), dtype=float)
     line_of_sight_spherical[:, 0] = 1
     line_of_sight_spherical[:, 1] = const.FULL_ARC * phase
     line_of_sight_spherical[:, 2] = inclination
@@ -852,7 +852,10 @@ def calculate_volume_ellipse_approx(equator_points=None, meridian_points=None):
     :return: float;
     """
     areas = up.abs(const.PI * equator_points[:, 1] * meridian_points[:, 0])
-    return up.abs(np.trapz(areas, equator_points[:, 2]))
+    try:
+        return up.abs(np.trapezoid(areas, equator_points[:, 2]))
+    except AttributeError:
+        return up.abs(np.trapz(areas, equator_points[:, 2]))
 
 
 def plane_projection(points, plane, keep_3d=False):
@@ -896,7 +899,7 @@ def split_to_batches(array, n_proc):
     :param array: Union[List, numpy.array];
     :return: List;
     """
-    indices = np.linspace(0, len(array), num=n_proc+1, endpoint=True, dtype=INT)
+    indices = np.linspace(0, len(array), num=n_proc+1, endpoint=True, dtype=int)
     indices = [(indices[ii-1], indices[ii]) for ii in range(1, n_proc+1)]
     return [array[idx[0]: idx[1]] for idx in indices]
 

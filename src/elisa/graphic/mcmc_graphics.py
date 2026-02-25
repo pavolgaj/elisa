@@ -40,8 +40,9 @@ class Plot(object):
                 title = r'{0}=${1:.3f}^{{{2:+.3f}}}_{{{3:+.3f}}}$ {4}'.format(kwargs['labels'][i], value, top, bottom,
                                                                               unit)
             ax.set_title(title)
-
-        plt.show()
+        
+        #plt.show()
+        return figure
 
     @staticmethod
     def paramtrace(**kwargs):
@@ -83,7 +84,8 @@ class Plot(object):
         ax[-1].set_xlabel('N')
 
         plt.subplots_adjust(right=1.0, top=1.0, hspace=0)
-        plt.show()
+        #plt.show()
+        return fig
 
     @staticmethod
     def autocorr(**kwargs):
@@ -115,4 +117,5 @@ class Plot(object):
         ax[-1].set_xlabel('N')
 
         plt.subplots_adjust(right=1.0, top=1.0, hspace=0)
-        plt.show()
+        #plt.show()
+        return fig

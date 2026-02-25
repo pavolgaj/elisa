@@ -22,4 +22,4 @@ class Plot(object):
             'y_unit': self.data_set.y_unit,
             'plot_kwargs': plot_kwargs
         })
-        data_set_graphics.display_observations(**obs_kwargs)
+        return data_set_graphics.display_observations(**obs_kwargs)

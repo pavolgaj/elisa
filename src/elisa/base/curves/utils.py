@@ -104,7 +104,7 @@ def get_component_limbdarkening_cfs(component_instance, symmetry_test, passbands
 
         if symmetry_test:
             if settings.USE_SINGLE_LD_COEFFICIENTS:
-                ld_cfs = {fltr: vals[np.zeros(component_instance.temperatures.shape, dtype=INT)]
+                ld_cfs = {fltr: vals[np.zeros(component_instance.temperatures.shape, dtype=int)]
                           for fltr, vals in ld_cfs.items()}
             else:
                 ld_cfs = {fltr: component_instance.mirror_face_values(vals)

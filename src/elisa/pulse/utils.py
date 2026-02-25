@@ -1,6 +1,5 @@
 import numpy as np
 from .. import const, utils
-from .. base.types import INT
 
 
 def phase_correction(phase, synchronicity):
@@ -174,8 +173,8 @@ def pole_neighbours(star):
     :param star: StarContainer
     :return:
     """
-    poles = np.array([star.points_spherical[:, 2].argmax(), star.points_spherical[:, 2].argmin()], dtype=INT)
-    neighbour_idx = np.empty(2, dtype=INT)
+    poles = np.array([star.points_spherical[:, 2].argmax(), star.points_spherical[:, 2].argmin()], dtype=int)
+    neighbour_idx = np.empty(2, dtype=int)
     for ii, pole in enumerate(poles):
         in_face = (pole == star.faces).any(axis=1)
         polar_face = (star.faces[in_face])[0]

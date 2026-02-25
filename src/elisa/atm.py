@@ -11,7 +11,6 @@ from threading import Thread
 from typing import Iterable
 from copy import deepcopy
 
-from .base.types import FLOAT
 from .logger import getLogger
 from .base.error import (
     AtmosphereError,
@@ -51,8 +50,8 @@ class AtmModel(object):
 
     @classmethod
     def from_dataframe(cls, df):
-        return cls(flux=np.array(df[settings.ATM_MODEL_DATAFRAME_FLUX], dtype=FLOAT),
-                   wavelength=np.array(df[settings.ATM_MODEL_DATAFRAME_WAVE], dtype=FLOAT))
+        return cls(flux=np.array(df[settings.ATM_MODEL_DATAFRAME_FLUX], dtype=float),
+                   wavelength=np.array(df[settings.ATM_MODEL_DATAFRAME_WAVE], dtype=float))
 
     def to_dataframe(self):
         return pd.DataFrame(
@@ -910,7 +909,7 @@ def multithread_atm_tables_reader(path_queue, error_queue, result_queue):
             result_queue.put((index, None))
             continue
         try:
-            types = {'flux': FLOAT, 'wave': FLOAT}
+            types = {'flux': float, 'wave': float}
             t, l, m = parse_domain_quantities_from_atm_table_filename(os.path.basename(file_path))
             atm_container = AtmDataContainer(pd.read_csv(file_path, dtype=types), t, l, m, file_path)
             result_queue.put((index, atm_container))
@@ -993,7 +992,7 @@ def compute_normal_intensity(spectral_flux, wavelength, flux_mult=1.0, wave_mult
     :param wave_mult: float;
     :return: numpy.array;
     """
-    return flux_mult * wave_mult * integrate.simps(spectral_flux, wavelength, axis=1)
+    return flux_mult * wave_mult * integrate.simpson(spectral_flux, x=wavelength, axis=1)
 
 
 def compute_integral_si_intensity_from_passbanded_dict(passbaned_dict):
@@ -1014,8 +1013,8 @@ def compute_integral_si_intensity_from_atm_data_containers(atm_data_containers):
     """
     return [
         IntensityContainer(
-            intensity=const.PI * integrate.simps(adc.model.flux * adc.flux_to_si_mult,
-                                                 adc.model.wavelength * adc.wave_to_si_mult),
+            intensity=const.PI * integrate.simpson(adc.model.flux * adc.flux_to_si_mult,
+                                                 x=adc.model.wavelength * adc.wave_to_si_mult),
             temperature=adc.temperature,
             log_g=adc.log_g,
             metallicity=adc.metallicity

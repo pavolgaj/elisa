@@ -120,7 +120,7 @@ def fit_lc_summary_with_error_propagation(fit_instance, path, percentiles, dimen
 
     # avoiding np warnings about NANs
     calculated_percentiles = np.empty((3, full_chain.shape[1]))
-    calculated_percentiles[:] = np.NaN
+    calculated_percentiles[:] = np.nan
     full_chain_mask = (~np.isnan(full_chain)).any(axis=0)
 
     # evaluating posterior distribution of each binary parameter
@@ -713,7 +713,7 @@ def fit_rv_summary_with_error_propagation(fit_instance, path, percentiles):
 
     # avoiding np warnings about NANs
     calculated_percentiles = np.empty((3, full_chain.shape[1]))
-    calculated_percentiles[:] = np.NaN
+    calculated_percentiles[:] = np.nan
     full_chain_mask = (~np.isnan(full_chain)).any(axis=0)
     calculated_percentiles[:, full_chain_mask] = np.percentile(full_chain[:, full_chain_mask], percentiles, axis=0)
     full_chain_results = np.row_stack((calculated_percentiles[1, :],

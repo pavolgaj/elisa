@@ -16,7 +16,7 @@ class PulsationModeProperties(SystemProperties):
         """
         if int(value) - value == 0:
             value = int(value)
-        if not isinstance(value, (int, INT)):
+        if not isinstance(value, (int, int)):
             raise TypeError('Angular degree `l` is not (numpy.)int ')
         return value
 
@@ -30,7 +30,7 @@ class PulsationModeProperties(SystemProperties):
         """
         if int(value) - value == 0:
             value = int(value)
-        if not isinstance(value, (int, INT)):
+        if not isinstance(value, (int, int)):
             raise TypeError('Angular degree `m` is not (numpy.)int ')
         return value
 
@@ -45,8 +45,8 @@ class PulsationModeProperties(SystemProperties):
         if isinstance(value, (u.Quantity, str)):
             retval = u.Quantity(value) if isinstance(value, str) else value
             retval = np.float64(retval.to(u.VELOCITY_UNIT))
-        elif isinstance(value, (int, INT, float, FLOAT)):
-            retval = FLOAT(value)
+        elif isinstance(value, (int, float)):
+            retval = float(value)
         else:
             raise TypeError('Value of `amplitude` is not (numpy.)int or (numpy.)float '
                             'nor astropy.unit.quantity.Quantity instance.')
@@ -66,8 +66,8 @@ class PulsationModeProperties(SystemProperties):
         if isinstance(value, (u.Quantity, str)):
             retval = u.Quantity(value) if isinstance(value, str) else value
             retval = np.float64(retval.to(u.FREQUENCY_UNIT))
-        elif isinstance(value, (int, INT, float, FLOAT)):
-            retval = (FLOAT(value) * u.DefaultPulsationsInputUnits['frequency']).to(u.FREQUENCY_UNIT).value
+        elif isinstance(value, (int, float)):
+            retval = (float(value) * u.DefaultPulsationsInputUnits['frequency']).to(u.FREQUENCY_UNIT).value
         else:
             raise TypeError('Value of `frequency` is not (numpy.)int or (numpy.)float '
                             'nor astropy.unit.quantity.Quantity instance.')
@@ -134,7 +134,7 @@ class PulsationModeProperties(SystemProperties):
         :param value: float; phase shift in radians
         :return:
         """
-        if not isinstance(value, (int, INT, float, FLOAT)):
+        if not isinstance(value, (int, float)):
             raise TypeError('Parameter is not is not (numpy.)int or (numpy.)float')
         return value
 
