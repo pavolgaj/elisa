@@ -176,7 +176,7 @@ class Plot(object):
         return graphics.binary_mesh(**binary_mesh_kwargs)
 
     def wireframe(self, phase=0.0, components_to_plot='both', plot_axis=True, inclination=None, azimuth=None,
-                  return_figure_instance=False):
+                  return_figure_instance=False, stl_model=None):
         """
         Function displays wireframe model of the stellar surface.
 
@@ -187,6 +187,7 @@ class Plot(object):
         :param azimuth: Union[float, astropy.Quantity]; azimuth of the camera (in degrees if float)
         :param return_figure_instance: bool; if True, the Figure instance is returned instead of displaying the
                                              produced figure
+        :param stl_model: str; if not None, export 3D model as STL file suitable for 3D printer (filename given in stl_model) 
         """
         wireframe_kwargs = dict()
         inclination = transform.deg_transform(inclination, u.deg, transform.WHEN_FLOAT64,
@@ -204,6 +205,36 @@ class Plot(object):
 
         orbital_position_container.build_mesh(components_distance=components_distance)
         orbital_position_container.build_faces(components_distance=components_distance)
+        
+        if stl_model:
+            import open3d as o3d
+            
+            prim=orbital_position_container.primary
+            sec=orbital_position_container.secondary
+
+            # Offset second mesh triangles
+            offset = len(prim.points)
+            sec_offset = sec.faces + offset
+
+            # Combine vertices and triangles
+            vertices_combined = np.vstack([prim.points*50, sec.points*50])  #scale it to reasonable size
+            triangles_combined = np.vstack([prim.faces, sec_offset])
+
+            # Create Open3D mesh
+            mesh = o3d.geometry.TriangleMesh()
+            mesh.vertices = o3d.utility.Vector3dVector(vertices_combined)
+            mesh.triangles = o3d.utility.Vector3iVector(triangles_combined)
+
+            # Compute normals (required for STL)
+            mesh.compute_vertex_normals()
+            mesh.compute_triangle_normals()
+            
+            if not '.stl' in stl_model: stl_model+='.stl'
+
+            # Save STL
+            o3d.io.write_triangle_mesh(stl_model, mesh)
+            
+            
 
         if components_to_plot in ['primary', 'both']:
             points, faces = orbital_position_container.primary.surface_serializer()
