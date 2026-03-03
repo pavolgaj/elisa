@@ -149,6 +149,7 @@ setup(
         'parameterized>=0.7.4',
         'numba>=0.51.2',
         'requests>=2.26.0',
+        'open3d'
     ],
 
     # List additional groups of dependencies here (e.g. development
