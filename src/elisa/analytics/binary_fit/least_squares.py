@@ -117,9 +117,25 @@ class LightCurveFit(AbstractLCFit, metaclass=ABCMeta):
                     observer_system_cls=BinarySystem, samples=samples)
         initial_vector = parameters.vector_normalizer(self.initial_vector, self.fitable.keys(), self.normalization)
 
+        def callback(x, *args, **kwargs):
+            global last_x
+            last_x = x.copy()      # store current parameters
+
         # evaluate least squares from scipy
         logger.info("fitting started...")
-        result = least_squares(self.model_to_fit, initial_vector, jac=kwargs.get('jac', '2-point'), bounds=(0, 1),
+        try:
+            try:
+                result = least_squares(self.model_to_fit, initial_vector, jac=kwargs.get('jac', '2-point'), bounds=(0, 1),
+                               method=kwargs.get('method', 'trf'), ftol=kwargs.get('ftol', 1e-7),
+                               xtol=kwargs.get('xtol', 1e-8), gtol=kwargs.get('gtol', 1e-8),
+                               x_scale=kwargs.get('x_scale', 1.0), loss=kwargs.get('loss', 'linear'),
+                               f_scale=kwargs.get('f_scale', 1.0), diff_step=kwargs.get('diff_step', None),
+                               tr_solver=kwargs.get('tr_solver', None), tr_options=kwargs.get('tr_options', {}),
+                               jac_sparsity=kwargs.get('jac_sparsity', None), max_nfev=kwargs.get('max_nfev', None),
+                               verbose=kwargs.get('verbose', 2), callback=callback, args=kwargs.get('args', ()),
+                               kwargs=kwargs.get('kwargs', {}))
+            except TypeError:
+                result = least_squares(self.model_to_fit, initial_vector, jac=kwargs.get('jac', '2-point'), bounds=(0, 1),
                                method=kwargs.get('method', 'trf'), ftol=kwargs.get('ftol', 1e-7),
                                xtol=kwargs.get('xtol', 1e-8), gtol=kwargs.get('gtol', 1e-8),
                                x_scale=kwargs.get('x_scale', 1.0), loss=kwargs.get('loss', 'linear'),
@@ -128,9 +144,13 @@ class LightCurveFit(AbstractLCFit, metaclass=ABCMeta):
                                jac_sparsity=kwargs.get('jac_sparsity', None), max_nfev=kwargs.get('max_nfev', None),
                                verbose=kwargs.get('verbose', 2), args=kwargs.get('args', ()),
                                kwargs=kwargs.get('kwargs', {}))
-        logger.info("fitting finished")
+            logger.info("fitting finished")
+            result = parameters.vector_renormalizer(result.x, self.fitable.keys(), self.normalization)
+        except KeyboardInterrupt:
+            logger.info("Optimization interrupted by user")
+            result = parameters.vector_renormalizer(last_x, self.fitable.keys(), self.normalization)
 
-        result = parameters.vector_renormalizer(result.x, self.fitable.keys(), self.normalization)
+        
         # put all together
         result_dict = {lbl: {
             'value': result[i],
