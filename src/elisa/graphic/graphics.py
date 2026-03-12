@@ -911,18 +911,18 @@ def binary_lc_fit_plot(**kwargs):
 
         if kwargs['y_err'][fltr] is None:
             ax1.scatter(kwargs['x_data'][fltr], kwargs['y_data'][fltr], s=3, label=fltr + ' observed',
-                        color=dt_clr)
+                        color=dt_clr, zorder = 1)
 
             ax2.scatter(kwargs['x_data'][fltr], kwargs['residuals'][fltr], s=3, label=fltr + ' residual',
-                        color=dt_clr)
+                        color=dt_clr, zorder = 1)
         else:
             ax1.errorbar(kwargs['x_data'][fltr], kwargs['y_data'][fltr], yerr=kwargs['y_err'][fltr], fmt='o',
-                         linestyle='none', markersize=3, label=fltr + ' observed', color=dt_clr, rasterized=rasterize)
+                         linestyle='none', markersize=3, label=fltr + ' observed', color=dt_clr, rasterized=rasterize, zorder = 1)
 
             ax2.errorbar(kwargs['x_data'][fltr], kwargs['residuals'][fltr], yerr=kwargs['y_err'][fltr], fmt='o',
-                         linestyle='none', markersize=3, label=fltr + ' residual', color=dt_clr, rasterized=rasterize)
+                         linestyle='none', markersize=3, label=fltr + ' residual', color=dt_clr, rasterized=rasterize, zorder = 1)
 
-        ax1.plot(kwargs['synth_phases'], curve, label=fltr + ' synthetic', color=clr, linewidth=2)
+        ax1.plot(kwargs['synth_phases'], curve, label=fltr + ' synthetic', color=clr, linewidth=2, zorder = 2)
 
     ax2.axhline(0, ls='dashed', c='black', lw=0.5)
 
