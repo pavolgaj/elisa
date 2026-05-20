@@ -4,6 +4,10 @@ import json
 import os.path as op
 import sys
 
+# fix for py3.14
+import multiprocessing as mp
+mp.set_start_method("fork", force=True)
+
 from . conf.settings import settings
 from . binary_system.system import BinarySystem
 from . managers.download_manager import DownloadManager
